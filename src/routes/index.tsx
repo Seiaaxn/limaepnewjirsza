@@ -11,6 +11,7 @@ import {
   Clock,
 } from "lucide-react";
 import { img as resolveImg, onImgError } from "../lib/site-images";
+import { CardBackdrop } from "../components/HeroBanner";
 import { HashtagSection } from "../components/TikTokSections";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { GEN_MEMBER_COUNTS, GEN_FOLLOWER_REQUIREMENTS } from "../lib/site-config";
@@ -157,6 +158,16 @@ function Index() {
     <main className="mx-auto max-w-6xl px-4 pb-24">
       {/* ── Hero card ─────────────────────────────────────────── */}
       <section className="glass-card animate-rise mt-8 overflow-hidden p-7 md:p-12">
+        {/* Banner artwork di dalam kartu — memudar ke arah teks (ala KyzzAPI) */}
+        <CardBackdrop />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, var(--color-card) 0%, transparent 38%)",
+          }}
+          aria-hidden
+        />
         {/* Dekorasi glow lembut agar hero tidak polos */}
         <div
           aria-hidden
