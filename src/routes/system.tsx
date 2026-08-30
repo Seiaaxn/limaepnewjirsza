@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Zap, Clock, Server, Cpu, MemoryStick, Globe, HardDrive, Activity, Users } from "lucide-react";
-import { BackButton } from "../components/BackButton";
+import { Link } from "@tanstack/react-router";
+import { Zap, Clock, Server, Cpu, MemoryStick, Globe, HardDrive, Activity, Users, ChevronRight } from "lucide-react";
+import { CardBackdrop } from "../components/HeroBanner";
 import { getPersistedSessionStart } from "../lib/session";
 
 export const Route = createFileRoute("/system")({
@@ -134,7 +135,7 @@ function Sparkline({ values, color }: { values: number[]; color: string }) {
 
 function StatTile({ icon: Icon, label, value, sub }: { icon: React.ElementType; label: string; value: string; sub: string }) {
   return (
-    <div className="glass-card p-5">
+    <div className="glass-card glass-card-hover p-5">
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">{label}</p>
         <span className="grid h-8 w-8 place-items-center rounded-full bg-secondary text-accent">
@@ -205,12 +206,37 @@ function SystemPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 pb-24">
-      <div className="pt-8">
-        <BackButton />
+      {/* ── Header: logo + breadcrumb (pengganti tombol kembali) ─ */}
+      <div className="flex items-center gap-2 pt-8 pb-4 text-sm">
+        <Link
+          to="/"
+          className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent font-display text-xs font-bold text-accent-foreground transition-transform hover:scale-105"
+          aria-label="Kembali ke beranda"
+        >
+          5F
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+        <Link to="/" className="text-muted-foreground transition-colors hover:text-foreground">
+          Five Fail Family
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+        <span className="font-semibold text-foreground">System</span>
       </div>
 
       {/* ── Hero Banner ──────────────────────────────────────── */}
-      <div className="glass-card mt-4 overflow-hidden p-8 md:p-10" style={{ borderColor: "oklch(from var(--color-accent) l c h / 0.3)" }}>
+      <div
+        className="glass-card overflow-hidden p-8 md:p-10"
+        style={{ borderColor: "oklch(from var(--color-accent) l c h / 0.3)" }}
+      >
+        {/* Banner artwork di dalam kartu — sama seperti di beranda */}
+        <CardBackdrop opacity={0.14} />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "linear-gradient(to top, var(--color-card) 0%, transparent 42%)",
+          }}
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-15"
           style={{ background: "radial-gradient(ellipse at 80% 20%, var(--color-accent), transparent 60%)" }}
