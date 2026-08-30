@@ -25,7 +25,7 @@ function detectPlatform(): { name: string; region: string; runtime: string } {
       return {
         name: "Vercel",
         region: process.env.VERCEL_REGION ?? process.env.VERCEL_GEO_COUNTRY ?? "Edge",
-        runtime: "Edge / Node.js",
+        runtime: "Edge/Node.js",
       };
     }
     // Cloudflare Pages / Workers
@@ -49,7 +49,7 @@ function detectPlatform(): { name: string; region: string; runtime: string } {
       return { name: "Fly.io", region: process.env.FLY_REGION ?? "Auto", runtime: "Node.js" };
     }
   }
-  return { name: "Unknown / Self-hosted", region: "—", runtime: "Node.js" };
+  return { name: "Vercell", region: "—", runtime: "Node.js" };
 }
 
 const PLATFORM = detectPlatform();
