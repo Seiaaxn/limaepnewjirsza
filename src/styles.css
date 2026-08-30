@@ -90,6 +90,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     color-scheme: light;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
   body {
     background-color: var(--color-background);
@@ -108,7 +110,25 @@
       100% 100%,
       56px 56px,
       56px 56px;
-    background-attachment: fixed;
+    /* Catatan performa: sengaja TIDAK pakai `background-attachment: fixed`.
+       "fixed" memaksa browser mengulang paint background di setiap frame
+       scroll (terutama di Chrome/Windows & sebagian mobile) — itu penyebab
+       utama scroll terasa berat/patah-patah pada halaman panjang. Dengan
+       attachment default ("scroll"), background ikut ter-composite normal
+       bersama konten sehingga scroll tetap 60fps. */
+    overflow-x: hidden;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
   ::selection {
     background: oklch(from var(--color-accent) l c h / 0.18);
@@ -227,6 +247,7 @@
 }
 
 @utility glass-card-hover {
+  will-change: transform;
   &:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
